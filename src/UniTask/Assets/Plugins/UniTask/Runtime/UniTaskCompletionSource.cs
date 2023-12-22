@@ -256,7 +256,7 @@ namespace Cysharp.Threading.Tasks
                 {
                     // goran: dangerous, checking if this fudges up the Unity callstacks
                     // eh.GetException().Throw();
-                    ArkioEventDispatch.DispatchLogEvent("GetResult threw an exception, we are temporarily eating it " + eh.GetException().SourceException.Message);
+                    Arkio.ArkioEventDispatch.DispatchLogEvent("GetResult threw an exception, we are temporarily eating it " + eh.GetException().SourceException.Message);
                 }
 
                 // throw new InvalidOperationException("Critical: invalid exception type was held.");
