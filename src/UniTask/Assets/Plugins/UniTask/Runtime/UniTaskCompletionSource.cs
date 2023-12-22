@@ -9,8 +9,21 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Cysharp.Threading.Tasks.Internal;
 
+
+namespace Cysharp.Arkio {
+    public static class ArkioEventDispatch {
+
+        public static event Action<string> LogDispatched;
+
+        public static void DispatchLogEvent(string logStr) {
+            LogDispatched?.Invoke(logStr);
+        }
+    }
+}
 namespace Cysharp.Threading.Tasks
 {
+
+
     public interface IResolvePromise
     {
         bool TrySetResult();
@@ -243,7 +256,7 @@ namespace Cysharp.Threading.Tasks
                 {
                     // goran: dangerous, checking if this fudges up the Unity callstacks
                     // eh.GetException().Throw();
-                    Debug.LogError("GetResult threw an exception, we are temporarily eating it " + eh.GetException().SourceException.Message);
+                    ArkioEventDispatch.DispatchLogEvent("GetResult threw an exception, we are temporarily eating it " + eh.GetException().SourceException.Message);
                 }
 
                 // throw new InvalidOperationException("Critical: invalid exception type was held.");
