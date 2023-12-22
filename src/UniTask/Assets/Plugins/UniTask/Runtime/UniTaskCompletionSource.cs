@@ -241,10 +241,12 @@ namespace Cysharp.Threading.Tasks
                 }
                 else if (error is ExceptionHolder eh)
                 {
-                    eh.GetException().Throw();
+                    // goran: dangerous, checking if this fudges up the Unity callstacks
+                    // eh.GetException().Throw();
+                    Debug.LogError("GetResult threw an exception, we are temporarily eating it " + eh.GetException().SourceException.Message);
                 }
 
-                throw new InvalidOperationException("Critical: invalid exception type was held.");
+                // throw new InvalidOperationException("Critical: invalid exception type was held.");
             }
 
             return result;
